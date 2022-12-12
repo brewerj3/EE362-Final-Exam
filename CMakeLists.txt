@@ -3,4 +3,10 @@ project(EE362_Final_Exam C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(EE362_Final_Exam main.c)
+add_executable(height height.c)
+
+add_executable(increase increase.c)
+
+add_executable(reverse reverse.c)
+
+add_executable(topsort topsort.c)
