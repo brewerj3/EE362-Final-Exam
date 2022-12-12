@@ -1,9 +1,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int increase(int num[], int length) {
-    return 0;
+int max(int num[], int n, int *max_length) {
+    if(n == 1) {
+        return 1;
+    }
+    int res = 0;
+    int maxEnding = 1;
+    for(int i = 1; i < n; i++ ) {
+        res = max(num,i,max_length);
+        if(num[i - 1] < num[n - 1] && res + 1 > maxEnding) {
+            maxEnding = res + 1;
+        }
+    }
+    if(*max_length < maxEnding) {
+        *max_length = maxEnding;
+    }
+    return maxEnding;
 }
+
+int increase(int num[], int length) {
+    int maximum = 1;
+    max(num, length, &maximum);
+    return maximum;
+}
+
 
 void displayArray(int num[], int length) {
     for (int i = 0; i < length; i++) {
