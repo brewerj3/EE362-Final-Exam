@@ -55,10 +55,10 @@ int height(struct treeNode *t) {                   // Finds the height of a bina
         heightRight = height(t->right);
     }
     if((t->right == NULL) && (t->left != NULL)) {
-        height(t->left);
+        heightLeft = height(t->left);
     }
     if((t->left == NULL) && (t->right != NULL)) {
-        height(t->left);
+        heightRight = height(t->right);
     }
 
     if(heightLeft == heightRight) {
