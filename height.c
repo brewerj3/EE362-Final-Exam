@@ -43,7 +43,33 @@ struct treeNode *tree2() {
     return root;
 }
 
-int height(struct treeNode *t) {
+int height(struct treeNode *t) {                   // Finds the height of a binary tree. Use recursion, find the height of the left subtree and right subtree and add one to them
+    if((t->left == NULL) && (t->right == NULL)) {
+        return 1;
+    }
+    int heightLeft = 0;
+    int heightRight = 0;
+
+    if((t->left != NULL) && (t->right != NULL)) {
+        heightLeft = height(t->left);       // Find leftSubtree Height
+        heightRight = height(t->right);
+    }
+    if((t->right == NULL) && (t->left != NULL)) {
+        height(t->left);
+    }
+    if((t->left == NULL) && (t->right != NULL)) {
+        height(t->left);
+    }
+
+    if(heightLeft == heightRight) {
+        return heightLeft + 1;
+    }
+    if(heightLeft > heightRight) {
+        return heightLeft + 1;
+    }
+    if(heightLeft < heightRight) {
+        return heightRight + 1;
+    }
     return 0;
 }
 
