@@ -31,7 +31,16 @@ struct listNode *list1() {
 }
 
 struct listNode *reverse(struct listNode *head) {
-    return NULL;
+    struct listNode *previous = NULL;
+    struct listNode *current = head;
+    while(current != NULL) {
+        struct listNode *next = current->next;
+        current->next = previous;
+        previous = current;
+        current = next;
+    }
+    head = previous;
+    return head;
 }
 
 void displayList(struct listNode *head) {
