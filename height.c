@@ -52,8 +52,8 @@ height(struct treeNode *t) {                   // Finds the height of a binary t
     int heightRight = 0;
 
     if ((t->left != NULL) && (t->right != NULL)) {
-        heightLeft = height(t->left);       // Find leftSubtree Height
-        heightRight = height(t->right);
+        heightLeft = height(t->left);       // Holds leftSubtree Height
+        heightRight = height(t->right);     // Holds rightSubtree Height
     }
     if ((t->right == NULL) && (t->left != NULL)) {
         heightLeft = height(t->left);
