@@ -66,12 +66,12 @@ void displayList(struct node *list) {
     printf("\n");
 }
 
-int findIndegree(struct node **adjList, int nodeID) {
+int findIndegree(struct node **adjList, int nodeID, int arraySize) {
     int indegree = 0;
-    for (int i = 0; i < NUMNODES; i++) {
+    for (int i = 0; i < arraySize; i++) {
         struct node *temp = adjList[i];
-        while (temp->next != NULL) {
-            if (temp->next->id == nodeID) {
+        while (temp != NULL) {
+            if (temp->id == nodeID) {
                 indegree++;
             }
             temp = temp->next;
@@ -89,16 +89,14 @@ int summArray(const int array[], int size) {
 }
 
 struct node *topsort(struct node **adjList, int n) {
-    printf("test");
     struct node *head = createNode(-1);                         // Return this when done.
-
     int indegreeArray[n];                        // Create Array of indegrees.
     for (int i = 0; i < n; i++) {
-        indegreeArray[i] = findIndegree(adjList, i);
+        indegreeArray[i] = findIndegree(adjList, i, n);
     }
     while (summArray(indegreeArray, n) > 0) {
         // Find the zero indegree
-        int zeroIndegree = -1;
+        int zeroIndegree = 0;
         for (int i = 0; i < n; i++) {
             if (indegreeArray[i] == 0) {
                 zeroIndegree = i;
@@ -112,6 +110,7 @@ struct node *topsort(struct node **adjList, int n) {
             indegreeArray[temp->next->id]--;    // decrement the indegrees pointed too
             temp = temp->next;
         }
+        indegreeArray[zeroIndegree] = -1;   // remove the zeroindegree from the array
         // Add the zeroIndegree to the sortedList
         if (head->next == NULL) {
 
@@ -138,7 +137,6 @@ void displayAdjList(struct node **adjList, int n) {
         printf("\n");
     }
     printf("\n");
-    printf("done displaying \n");
 }
 
 int main() {
