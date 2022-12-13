@@ -95,7 +95,7 @@ struct node *topsort(struct node **adjList, int n) {
         indegreeArray[i] = findIndegree(adjList, i, n);
     }
     int firstHead = 0;
-    while (summArray(indegreeArray, n) > n*-1) {
+    while (summArray(indegreeArray, n) > n * -1) {
         // Find the zero indegree
         int zeroIndegree = 0;
         for (int i = 0; i < n; i++) {
@@ -105,10 +105,10 @@ struct node *topsort(struct node **adjList, int n) {
             }
         }
 
-        printf("\n\n");
+        /*printf("\n\n");
         for (int i = 0; i < n; i++) {
             printf("indegreeArray[%i] = %i\n", i, indegreeArray[i]);    // Print indegree array for debugging
-        }
+        }*/
 
         // Insert zero indegree struct into sorted list
         struct node *temp = adjList[zeroIndegree];
