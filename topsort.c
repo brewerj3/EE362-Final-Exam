@@ -9,7 +9,7 @@ struct node {
     struct node *next;
 };
 
-struct node **createAdjList(int n) /* Create adjacency list of of n nodes */
+struct node **createAdjList(int n) /* Create adjacency list of n nodes */
 {
     struct node **adjList = (struct node **) malloc(sizeof(struct node *) * n);
     for (int i = 0; i < n; i++) {
@@ -66,9 +66,72 @@ void displayList(struct node *list) {
     printf("\n");
 }
 
+int findIndegree(struct node **adjList, int nodeID) {
+    int indegree = 0;
+    for(int i = 0; i < NUMNODES; i++ ) {
+        struct node *temp = adjList[i];
+        while(temp->next != NULL) {
+            if(temp->next->id == nodeID) {
+                indegree++;
+            }
+            temp = temp->next;
+        }
+    }
+    return indegree;
+}
 
+int findZeroIndegree( struct node **adjList) {
+    int indegreeArray[NUMNODES];
+    for(int i = 0; i < NUMNODES; i++) {
+        indegreeArray[i] = findIndegree(adjList,i);
+    }
+    for(int i = 0; i <= NUMNODES; i++) {
+        if(indegreeArray[i] == 0) {
+            return i;
+        }
+    }
+}
+int summArray(const int array[], int size){
+    int sum = 0;
+    for(int i = 0;i <= NUMNODES; i++) {
+        sum = sum + array[i];
+    }
+    return sum;
+}
 struct node *topsort(struct node **adjList, int n) {
-    return NULL;
+    struct node *sortedList;                         // Return this when done.
+    int indegreeArray[NUMNODES];                        // Create Array of indegrees.
+    for(int i = 0; i < NUMNODES; i++) {
+        indegreeArray[i] = findIndegree(adjList,i);
+    }
+    while(summArray(indegreeArray, NUMNODES) > 0) {
+        // Find the zero indegree
+        int zeroIndegree = -1;
+        for (int i = 0; i <= NUMNODES; i++) {
+            if (indegreeArray[i] == 0) {
+                zeroIndegree = i;
+                break;
+            }
+        }
+        // Insert zero indegree struct into sorted list
+        struct node *temp = adjList[zeroIndegree];
+        while (temp->next != NULL) {
+            indegreeArray[temp->next->id]--;    // decrement the indegrees pointed too
+            temp = temp->next;
+        }
+        // Add the zeroIndegree to the sortedList
+        if(sortedList->next == NULL) {
+            sortedList->next = createNode(zeroIndegree);
+        }
+        else {
+            struct node *pNode = sortedList;
+            while(pNode->next != NULL) {
+                pNode = pNode->next;
+            }
+            pNode->next = createNode(zeroIndegree);
+        }
+    }
+    return sortedList;
 }
 
 
