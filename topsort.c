@@ -80,17 +80,6 @@ int findIndegree(struct node **adjList, int nodeID) {
     return indegree;
 }
 
-int findZeroIndegree( struct node **adjList) {
-    int indegreeArray[NUMNODES];
-    for(int i = 0; i < NUMNODES; i++) {
-        indegreeArray[i] = findIndegree(adjList,i);
-    }
-    for(int i = 0; i <= NUMNODES; i++) {
-        if(indegreeArray[i] == 0) {
-            return i;
-        }
-    }
-}
 int summArray(const int array[], int size){
     int sum = 0;
     for(int i = 0;i <= NUMNODES; i++) {
@@ -107,7 +96,7 @@ struct node *topsort(struct node **adjList, int n) {
     while(summArray(indegreeArray, NUMNODES) > 0) {
         // Find the zero indegree
         int zeroIndegree = -1;
-        for (int i = 0; i <= NUMNODES; i++) {
+        for (int i = 0; i < NUMNODES; i++) {
             if (indegreeArray[i] == 0) {
                 zeroIndegree = i;
                 break;
@@ -136,6 +125,7 @@ struct node *topsort(struct node **adjList, int n) {
 
 
 void displayAdjList(struct node **adjList, int n) {
+    printf("printing List \n");
     struct node *p;
     for (int i = 0; i < n; i++) {
         printf("%2d:", i);
@@ -153,6 +143,7 @@ int main() {
     displayAdjList(graph1, NUMNODES);
 
     printf("Topologically sorted list ");
+
     struct node *list = topsort(graph1, NUMNODES);
     displayList(list);
 
