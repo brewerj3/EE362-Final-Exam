@@ -89,12 +89,13 @@ int summArray(const int array[], int size) {
 }
 
 struct node *topsort(struct node **adjList, int n) {
-    struct node *head = createNode(-1);                         // Return this when done.
-    int indegreeArray[n];                        // Create Array of indegrees.
+    struct node *head = createNode(-1);                          // Return this when done.
+    int indegreeArray[n];                                           // Create Array of indegrees.
     for (int i = 0; i < n; i++) {
         indegreeArray[i] = findIndegree(adjList, i, n);
     }
-    while (summArray(indegreeArray, n) > 0) {
+    int firstHead = 0;
+    while (summArray(indegreeArray, n) > n*-1) {
         // Find the zero indegree
         int zeroIndegree = 0;
         for (int i = 0; i < n; i++) {
@@ -104,17 +105,24 @@ struct node *topsort(struct node **adjList, int n) {
             }
         }
 
+        printf("\n\n");
+        for (int i = 0; i < n; i++) {
+            printf("indegreeArray[%i] = %i\n", i, indegreeArray[i]);    // Print indegree array for debugging
+        }
+
         // Insert zero indegree struct into sorted list
         struct node *temp = adjList[zeroIndegree];
-        while (temp->next != NULL) {
-            indegreeArray[temp->next->id]--;    // decrement the indegrees pointed too
+        while (temp != NULL) {
+            indegreeArray[temp->id]--;    // Decrement the indegrees pointed too by adjList[zeroIndegree]->next
             temp = temp->next;
         }
-        indegreeArray[zeroIndegree] = -1;   // remove the zeroindegree from the array
-        // Add the zeroIndegree to the sortedList
-        if (head->next == NULL) {
 
-            head->next = createNode(zeroIndegree);
+        indegreeArray[zeroIndegree] = -1;   // remove the zeroindegree from the array
+
+        // Add the zeroIndegree to the sortedList
+        if (firstHead == 0) {
+            head->id = zeroIndegree;
+            firstHead = 1;
         } else {
             struct node *pNode = head;
             while (pNode->next != NULL) {
@@ -123,6 +131,7 @@ struct node *topsort(struct node **adjList, int n) {
             pNode->next = createNode(zeroIndegree);
         }
     }
+
     return head;
 }
 
