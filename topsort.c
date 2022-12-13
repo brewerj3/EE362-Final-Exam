@@ -90,7 +90,7 @@ int summArray(const int array[], int size) {
 
 struct node *topsort(struct node **adjList, int n) {
     printf("test");
-    struct node *sortedList = createNode(0);                         // Return this when done.
+    struct node *head = createNode(-1);                         // Return this when done.
 
     int indegreeArray[n];                        // Create Array of indegrees.
     for (int i = 0; i < n; i++) {
@@ -113,32 +113,32 @@ struct node *topsort(struct node **adjList, int n) {
             temp = temp->next;
         }
         // Add the zeroIndegree to the sortedList
-        if (sortedList->next == NULL) {
+        if (head->next == NULL) {
 
-            sortedList->next = createNode(zeroIndegree);
+            head->next = createNode(zeroIndegree);
         } else {
-            struct node *pNode = sortedList;
+            struct node *pNode = head;
             while (pNode->next != NULL) {
                 pNode = pNode->next;
             }
             pNode->next = createNode(zeroIndegree);
         }
     }
-    return sortedList;
+    return head;
 }
 
 
-void displayAdjList(struct node ** adjList, int n)
-{
-    struct node * p;
-    for (int i=0; i<n; i++) {
-        printf("%2d:",i);
-        for (p=adjList[i]; p!= NULL; p=p->next) {
-            printf("->%2d",p->id);
+void displayAdjList(struct node **adjList, int n) {
+    struct node *p;
+    for (int i = 0; i < n; i++) {
+        printf("%2d:", i);
+        for (p = adjList[i]; p != NULL; p = p->next) {
+            printf("->%2d", p->id);
         }
         printf("\n");
     }
     printf("\n");
+    printf("done displaying \n");
 }
 
 int main() {
